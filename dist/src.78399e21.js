@@ -28884,7 +28884,33 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"../node_modules/react-dom/client.js":[function(require,module,exports) {
+'use strict';
+
+var m = require('react-dom');
+if ("development" === 'production') {
+  exports.createRoot = m.createRoot;
+  exports.hydrateRoot = m.hydrateRoot;
+} else {
+  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+  exports.createRoot = function (c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.createRoot(c, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+  exports.hydrateRoot = function (c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+      return m.hydrateRoot(c, h, o);
+    } finally {
+      i.usingClientEntryPoint = false;
+    }
+  };
+}
+},{"react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-is/cjs/react-is.development.js":[function(require,module,exports) {
 /** @license React v16.13.1
  * react-is.development.js
  *
@@ -29891,12 +29917,25 @@ var MainView = exports.MainView = function MainView() {
     selectedMovie = _useState4[0],
     setSelectedMovie = _useState4[1];
   (0, _react.useEffect)(function () {
-    fetch('https://my-flix-api-faa857fcfb0f.herokuapp.com/movies').then(function (response) {
+    fetch('https://my-flix-api-faa857fcfb0f.herokuapp.com/movies', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+        // Add any additional headers as needed
+      }
+      // credentials: 'include' // Uncomment if you need to include cookies or authorization headers
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('Response:', response); // Log the raw response
       return response.json();
-    }).then(function (movies) {
-      setMovies(movies);
-    }).catch(function (e) {
-      return console.log(e);
+    }).then(function (data) {
+      console.log('Parsed JSON:', data); // Log the parsed JSON data
+      setMovies(data);
+    }).catch(function (error) {
+      console.error('Error fetching movies:', error);
+      // Handle error
     });
   }, []); // Empty dependency array ensures fetching happens only once
 
@@ -29914,6 +29953,7 @@ var MainView = exports.MainView = function MainView() {
   var handleMovieClick = function handleMovieClick(movie) {
     console.log('Clicked movie:', movie);
     // Handle click logic here, e.g., set selected movie state
+    setSelectedMovie(movie);
   };
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Popular Movies"), movies.map(function (movie) {
     return /*#__PURE__*/_react.default.createElement(_movieCard.default, {
@@ -29983,12 +30023,13 @@ module.hot.accept(reloadCSS);
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
-var _reactDom = _interopRequireDefault(require("react-dom"));
+var _client = require("react-dom/client");
 var _mainView = _interopRequireDefault(require("./components/main-view/main-view"));
 require("./index.scss");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Rendering the MainView component
-// ReactDOM.render(<MainView />, document.getElementById('app'));
+var root = (0, _client.createRoot)(document.getElementById('app'));
+root.render( /*#__PURE__*/_react.default.createElement(_mainView.default, null));
 
 // Importing SCSS for styling
 
@@ -30004,9 +30045,8 @@ var Greetings = function Greetings() {
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Welcome to my React App!"));
 };
 var container = document.getElementById('app');
-var root = _reactDom.default.createRoot(container);
 root.render( /*#__PURE__*/_react.default.createElement(MyFlixApplication, null));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/main-view/main-view":"components/main-view/main-view.jsx","./index.scss":"index.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom/client":"../node_modules/react-dom/client.js","./components/main-view/main-view":"components/main-view/main-view.jsx","./index.scss":"index.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -30031,7 +30071,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51252" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64402" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
