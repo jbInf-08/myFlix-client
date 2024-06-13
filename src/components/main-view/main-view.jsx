@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MovieCard from '../movie-card/movie-card';
-import MovieView from '../movie-view/movie-view';
 
 const MainView = () => {
-  const [movies, setMovies] = useState([
-    { id: 1, title: 'Inception', description: 'A mind-bending thriller', poster: 'https://m.media-amazon.com/images/I/711v-ttPJRL._AC_SL1500_.jpg', genre: 'Sci-Fi', director: 'Christopher Nolan' },
-    { id: 2, title: 'Interstellar', description: 'A space epic', poster: 'https://m.media-amazon.com/images/I/91kFYg4fX3L._AC_SL1500_.jpg', genre: 'Sci-Fi', director: 'Christopher Nolan' },
-    { id: 3, title: 'The Dark Knight', description: 'A superhero masterpiece', poster: 'https://m.media-amazon.com/images/I/818hyvdVfvL._AC_SL1500_.jpg', genre: 'Action', director: 'Christopher Nolan' }
-  ]);
+  const [movies, setMovies] = useState([]);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  useEffect(() => {
+    fetch('https://my-flix-api-faa857fcfb0f.herokuapp.com/movies') // Updated with correct endpoint
+      .then(response => response.json())
+      .then(data => setMovies(data))
+      .catch(error => console.error('Error fetching movies:', error));
+  }, []); // Empty dependency array ensures fetching happens only once
 
-  if (selectedMovie) {
-    return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />;
-  }
+  const handleMovieClick = (movie) => {
+    console.log('Clicked movie:', movie);
+    // Handle click logic here, e.g., set selected movie state
+  };
 
   return (
     <div>
-      {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} onMovieClick={() => setSelectedMovie(movie)} />
+      <h1>Popular Movies</h1>
+      {movies.map(movie => (
+        <MovieCard key={movie._id} movie={movie} onMovieClick={handleMovieClick} />
       ))}
     </div>
   );
