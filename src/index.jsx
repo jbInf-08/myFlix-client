@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import MainView from './components/main-view/main-view';
 
 // Rendering the MainView component
-// ReactDOM.render(<MainView />, document.getElementById('app'));
+const root = createRoot(document.getElementById('app'));
+root.render(<MainView />);
 
 // Importing SCSS for styling
 import "./index.scss";
@@ -29,5 +30,4 @@ const Greetings = () => {
 };
 
 const container = document.getElementById('app');
-const root = createRoot(container);
 root.render(<MyFlixApplication />);
