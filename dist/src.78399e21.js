@@ -26756,13 +26756,6 @@ var MyFlixApplication = function MyFlixApplication() {
 var Greetings = function Greetings() {
   return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h2", null, "Welcome to my React App!"));
 };
-
-// Finds the root of your app
-var container = document.querySelector("#root");
-var root = createRoot(container);
-
-// Tells React to render your app in the root DOM element
-root.render( /*#__PURE__*/_react.default.createElement(MyFlixApplication, null));
 },{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./components/main-view/main-view":"components/main-view/main-view.jsx","./index.scss":"index.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -26788,7 +26781,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56473" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58175" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
