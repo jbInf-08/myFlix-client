@@ -26606,39 +26606,62 @@ if ("development" !== 'production') {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.MovieCard = void 0;
 var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 // Ensure PropTypes is imported
 
-var MovieCard = function MovieCard(_ref) {
+var MovieCard = exports.MovieCard = function MovieCard(_ref) {
   var movie = _ref.movie,
     onMovieClick = _ref.onMovieClick;
-  return /*#__PURE__*/_react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement(Card, null, /*#__PURE__*/_react.default.createElement(Card.Img, {
+    variant: "top",
+    src: movie.imageUrl
+  }), /*#__PURE__*/_react.default.createElement(Card.Body, null, /*#__PURE__*/_react.default.createElement(Card.Title, null, movie.title), /*#__PURE__*/_react.default.createElement(Card.Text, null, movie.director.Name), /*#__PURE__*/_react.default.createElement(Button, {
     onClick: function onClick() {
-      return onMovieClick(movie);
-    }
-  }, movie.title);
+      onMovieClick(movie);
+    },
+    variant: "link"
+  }, "Open")));
 };
 MovieCard.propTypes = {
-  movie: _propTypes.default.shape({
-    _id: _propTypes.default.string.isRequired,
-    title: _propTypes.default.string.isRequired
-    // Add other required properties here
-  }).isRequired,
-  onMovieClick: _propTypes.default.func.isRequired
+  movie: PropType.shape({
+    title: PropType.string.isRequired,
+    imageUrl: PropType.string.isRequired
+  }).isRequired
 };
 var _default = exports.default = MovieCard;
-},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","prop-types":"../node_modules/prop-types/index.js"}],"components/movie-view/movie-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = exports.MovieView = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+var MovieView = exports.MovieView = function MovieView(_ref) {
+  var movie = _ref.movie,
+    onBackClick = _ref.onBackClick;
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("img", {
+    src: movie.poster,
+    alt: movie.title
+  })), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, "Title: "), /*#__PURE__*/_react.default.createElement("span", null, movie.title)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, "Description: "), /*#__PURE__*/_react.default.createElement("span", null, movie.description)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, "Genre: "), /*#__PURE__*/_react.default.createElement("span", null, movie.genre)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("span", null, "Director: "), /*#__PURE__*/_react.default.createElement("span", null, movie.director)), /*#__PURE__*/_react.default.createElement("button", {
+    onClick: onBackClick
+  }, "Back"));
+};
+var _default = exports.default = MovieView;
+},{"react":"../node_modules/react/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.MainView = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _movieCard = _interopRequireDefault(require("../movie-card/movie-card"));
+var _movieView = require("../movie-view/movie-view");
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
@@ -26648,22 +26671,36 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-var MainView = function MainView() {
+var MainView = exports.MainView = function MainView() {
   var _useState = (0, _react.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     movies = _useState2[0],
     setMovies = _useState2[1];
+  var _useState3 = (0, _react.useState)(null),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selectedMovie = _useState4[0],
+    setSelectedMovie = _useState4[1];
   (0, _react.useEffect)(function () {
-    fetch('https://my-flix-api-faa857fcfb0f.herokuapp.com/movies') // Updated with correct endpoint
-    .then(function (response) {
+    fetch('https://my-flix-api-faa857fcfb0f.herokuapp.com/movies').then(function (response) {
       return response.json();
-    }).then(function (data) {
-      return setMovies(data);
-    }).catch(function (error) {
-      return console.error('Error fetching movies:', error);
+    }).then(function (movies) {
+      setMovies(movies);
+    }).catch(function (e) {
+      return console.log(e);
     });
   }, []); // Empty dependency array ensures fetching happens only once
 
+  if (selectedMovie) {
+    return /*#__PURE__*/_react.default.createElement(_movieView.MovieView, {
+      movie: selectedMovie,
+      onBackClick: function onBackClick() {
+        return setSelectedMovie(null);
+      }
+    });
+  }
+  if (movies.length === 0) {
+    return /*#__PURE__*/_react.default.createElement("div", null, "The list is empty!");
+  }
   var handleMovieClick = function handleMovieClick(movie) {
     console.log('Clicked movie:', movie);
     // Handle click logic here, e.g., set selected movie state
@@ -26677,7 +26714,7 @@ var MainView = function MainView() {
   }));
 };
 var _default = exports.default = MainView;
-},{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../movie-card/movie-card":"components/movie-card/movie-card.jsx","../movie-view/movie-view":"components/movie-view/movie-view.jsx"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -26781,7 +26818,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58175" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62304" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

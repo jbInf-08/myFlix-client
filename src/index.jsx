@@ -12,8 +12,8 @@ import "./index.scss";
 const MyFlixApplication = () => {
   return (
     <div className="my-flix">
-      {/* Greeting can be a separate component for reusability */}
-      <Greetings /> {/* Assuming a Greetings component */}
+      {/** Greeting can be a separate component for reusability **/}
+      <Greetings /> {/** Assuming a Greetings component **/}
       <MainView />
     </div>
   );
